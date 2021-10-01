@@ -1,0 +1,161 @@
+version: '2.0'
+config:
+  store_entities_as_slots: true
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+  - goodbye
+  - bot_challenge
+  - thanks
+  - chitchat
+  - stop
+  - affirm
+  - deny
+  - check_the_bill:
+      use_entities: []
+  - phone_bill:
+      use_entities: []
+  - answer_phone_number:
+      use_entities: []
+  - answer_money:
+      use_entities: []
+  - answer_time:
+      use_entities: []
+
+entities:
+  - date_time
+  - number
+  - money
+  - type
+  - phone_number
+  - year
+slots:
+  date_time:
+    type: rasa.shared.core.slots.AnySlot
+    initial_value: null
+    auto_fill: false
+    influence_conversation: false
+  year:
+    type: rasa.shared.core.slots.AnySlot
+    initial_value: 今年
+    auto_fill: false
+    influence_conversation: false
+
+  number:
+    type: rasa.shared.core.slots.AnySlot
+    initial_value: null
+    auto_fill: false
+    influence_conversation: false
+
+  money:
+    type: rasa.shared.core.slots.AnySlot
+    initial_value: null
+    auto_fill: false
+    influence_conversation: false
+  type:
+    type: rasa.shared.core.slots.AnySlot
+    initial_value: null
+    auto_fill: false
+    influence_conversation: false
+
+  phone_number:
+    type: rasa.shared.core.slots.AnySlot
+    initial_value: null
+    auto_fill: false
+    influence_conversation: false
+
+responses:
+  utter_chitchat/greet:
+    - text: 您好！请问我可以帮到您吗？
+    - text: 您好！很高兴为您服务。请说出您要查询的功能？
+    - image: http://aimaksen.bslience.cn/hello.jpeg
+      text: 你好啊
+  utter_ask_time:
+    - text: 你想查询什么时候的
+    - text: 你想查询什么时间段的
+
+  utter_ask_phone_number:
+    - text: 哪个手机号
+    - text: 哪个号码
+  utter_ask_money:
+    - text: 请问想充值多少钱
+  utter_submit:
+    - text: 请稍等。。。
+    - text: 请稍后。。。
+  utter_ask_continue:
+    - text: 请问继续吗？
+
+  utter_bill_result:
+    - text: |-
+        查询到的信息:
+         - 手机号: {phone_number} 😀
+         - 时间: {year}{date_time}
+         - 花费: 100元
+
+
+
+
+  utter_chitchat/ask_name:
+    - image: "https://i.imgur.com/zTvA58i.jpeg"
+      text: 你好，我的名字叫小欧
+
+
+
+  utter_chitchat/ask_weather:
+    - text: Oh, it does look sunny right now in Berlin.
+      image: "https://i.imgur.com/vwv7aHN.png"
+    - text: 我看不见外面的太阳，我不确定外面的天气怎么杨
+  utter_chitchat:
+    - text: 呃。。。
+    - text: 唔。。。
+
+  utter_goodbye:
+    - text: 再见
+    - text: Bye~
+  utter_iamabot:
+    - text: 我是一个机器人
+    - text: 不好意思， 我正在学习中
+
+  utter_wrong_money:
+    - text: 不好意思，请输入金额的单位是元。
+  utter_wrong_phone:
+    - text: 请输入正确的手机号码
+  utter_slots_values:
+    - text: |-
+        好的，请确认一下信息:
+         - 手机号码: {phone_number} 😀
+         - 充值金额: {money}元
+
+
+actions:
+- utter_ask_time
+- utter_ask_money
+- utter_submit
+- utter_goodbye
+- utter_iamabot
+- utter_chitchat
+- utter_ask_phone_number
+- utter_bill_result
+- utter_wrong_money
+- utter_wrong_phone
+- validate_charge_form
+
+
+
+
+forms:
+  charge_form:
+    ignored_intents:
+    - chitchat
+    required_slots:
+      phone_number:
+      - type: from_entity
+        entity: phone_number
+        intent: answer_phone_number
+
+      money:
+      - type: from_text
+        entity: moeny
+
+e2e_actions: []

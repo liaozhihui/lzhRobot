@@ -1,0 +1,35 @@
+version: "2.0"
+
+
+rules:
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Say 'I am a bot' anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+- rule: Response with a chitchat utterance whenever user indulges in some chitchat
+  steps:
+  - intent: chitchat
+  - action: utter_chitchat
+
+- rule: 触发充值的表单
+  steps:
+    - intent: phone_bill
+    - action: charge_form
+    - active_loop: charge_form
+
+- rule: 表单被完成
+  condition:
+    - active_loop: charge_form
+  steps:
+    - action: charge_form
+    - active_loop: null
+    - action: utter_submit
+    - action: utter_slots_values
+
+
