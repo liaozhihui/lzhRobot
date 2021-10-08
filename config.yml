@@ -52,10 +52,13 @@ pipeline:
   analyzer: "char_wb"
   min_ngram: 1
   max_ngram: 4
-- name: "DIETClassifier"
-- name: ResponseSelector
-  epochs: 50
-  retrieval_intent: chitchat
+#- name: "DIETClassifier"
+#- name: ResponseSelector
+#  epochs: 50
+#  retrieval_intent: chitchat
+
+- name: MyComponents.SentimentAnalyzerWithBertTextCNN
+  batch_size: 16
 
 policies:
   - name: TEDPolicy
