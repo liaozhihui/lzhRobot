@@ -8,3 +8,4 @@
 运行actions的服务:rasa run actions;
 运行rasa shell的命令:rasa shell -m models --endpoints endpoints.yml
 
+添加了自定义组件的configForComponents.yml

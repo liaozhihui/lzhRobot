@@ -57,8 +57,8 @@ pipeline:
   epochs: 50
   retrieval_intent: chitchat
 
-#- name: MyComponents.SentimentAnalyzerWithBertTextCNN
-#  batch_size: 16
+- name: MyComponents.SentimentAnalyzerWithBertTextCNN
+  batch_size: 16
 
 policies:
   - name: TEDPolicy
